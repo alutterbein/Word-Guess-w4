@@ -4,69 +4,81 @@ var quizContainer = document.getElementById('quiz')
 var resultsContainer = document.getElementById('results');
 var submitButton = document.getElementById('submit');
 
+
 var correctCounter = 0;
-var incorrectCounter = 0;
 var timer;
 var timerCount;
 
-// function buildQuiz(){
-//   var output = [];
-//   questions.forEach(
-//     (currentQuestion, questionNumber) => {
-//       const answers =[];
-//       for(letter in currentQuestion.answers){
+const questions = [
+  {
+    question: "Who invented Javascript?",
+    answers: ["Sean King", "Steven Green", "Brendan Eich", "Benjamin Franklin"],
+    correct: 2
+  },
+  {
+    question: "Which one of these is a JavaScript package manager?",
+    answers: ["Node.js", "Typescript", "npm", "Python"],
+    correct: 2
+  },
+  {
+    question: "What key word do you use to declare a variable in javascript?",
+    answers: ["const", "var", "let", "All three can be used"],
+    correct: 3
+  },
+
+];
+var currentQuestion = 0;
+var correctAnswers = 0;
+
+function showQuestion(){
+  var questionText =
+  document.getElementById("question-text");
+  questionText.textContent = 
+  questions[currentQuestion].question;
+
+var answers = 
+document.querySelectorAll(".answer");
+answers.forEach((answer, index) => {
+  answer.textContent = 
+  questions[currentQuestion].answers[index];
+
+});
+var feedback = 
+document.getElementById("feedback");
+feedback.textContent = "";
 
 
-//         answers.push(
-//           `<label>
-//           <input `
-//         )
-//       }
-
-
-//     }
-//   )
-// }
-// function showResults(){}
-// buildQuiz();
-// submitButton.addEventListener('click', showResults);
-
-var questions = [
-    {
-      question: "Who invented JavaScript?",
-      answers: {
-        a: "Douglas Crockford",
-        b: "Sheryl Sandberg",
-        c: "Brendan Eich"
-      },
-      correctAnswer: "c"
-    },
-    {
-      question: "Which one of these is a JavaScript package manager?",
-      answers: {
-        a: "Node.js",
-        b: "TypeScript",
-        c: "npm"
-      },
-      correctAnswer: "c"
-    },
-    {
-      question: "Which tool can you use to ensure code quality?",
-      answers: {
-        a: "Angular",
-        b: "jQuery",
-        c: "RequireJS",
-        d: "ESLint"
-      },
-      correctAnswer: "d"
+}
+function checkAnswer(selected) {
+  var feedback =
+  document.getElementById("feedback");
+  if (selected ===
+    questions[currentQuestion].correctAnswer) {
+      feedback.textContent = "Correct!";
+      correctCounter++;
+    } else{
+      feedback.textContent= "Incorrect!";
     }
-  ];
+setTimeout(() => {
+  currentQuestion++;
+  if (currentQuestion < questions.length) {
+showQuestion();
+  } else {
+    var quizContainer = 
+    document.querySelector(".quiz");
+    quizContainer.innerHTML = `<p> You got ${correctAnswers} out of ${questions.length} questions.</p>`;
+  }
+
+}, 1000);
+}
+
+
 function startTimer(){
   timer=setInterval(function() {
     timerCount--;
     timerElement.textContent = timerCount;
     if (timerCount >= 0){
-      if(isWin &&timerCount > 0){
+      if(timerCount > 0){
       clearInterval(timer);
       quizComplete();
     };
@@ -76,67 +88,61 @@ function startTimer(){
     timeOut();
   }
   
-}, 3000);
+}, 1000);
 }
+// var timeLeft = 30;
+// var timer = setInterval(function() {
+// timeLeft--;
+// document.getElementById('timer').textContent = timeLeft;
+// if (timeLeft <= 0) {
+// clearInterval(timer);
+// alert('Time is up!');
+// }
+// }, 1000);
+
 
 
 function startQuiz(){
 timerCount = 30;
 startButton.disabled = true;
-renderQuiz
-startTimer()
+startTimer();
+showQuestion()
 
 };
-function quizComplete(){
+// function quizComplete(){
 
-  wordBlank.textContent = "Quiz Complete";
-  startButton.disabled = false;
-  // likely where I'll need to add highscore prompt, and score
-}
+//   quizContainer.textContent = "Quiz Complete";
+//   startButton.disabled = false;
+//   // likely where I'll need to add highscore prompt, and score
+// }
 
 function timeOut() {
-  wordBlank.textContent = "Time's Up!";
+  quizContainer.textContent = "Time's Up!";
   startButton.disabled = false
   // likely where I'll need to add highscore prompt, and score
 }
 
 
 
-// this could help basic function
-// for(var i=0; i <questions.length; i++){
-//   var response = window.prompt(questions[i.prompt]);
-// if(response== questions[i].answer){
-//   correctCounter++;
-// }
-// else {
-//   incorrectCounter++;
-// }
-// }
-// alert("You answered" + correctCounter + "/" + questions.length)
 
-
-
-// The setTimer function starts and stops the timer and triggers winGame() and loseGame()
+// The setTimer function starts and stops the timer
 function startTimer() {
   // Sets timer
   timer = setInterval(function() {
     timerCount--;
     timerElement.textContent = timerCount;
     if (timerCount >= 0) {
-      // Tests if win condition is met
-      if (timerCount > 0) {
         // Clears interval and stops timer
         clearInterval(timer);
-        quizComplete();
+       // quizComplete();
       }
-    }
-    // Tests if time has run out
+      // Tests if time has run out
     if (timerCount === 0) {
       // Clears interval
       clearInterval(timer);
       timeOut();
     }
-  }, 3000);
+  }, 1000);
 }
 
 startButton.addEventListener("click", startQuiz);

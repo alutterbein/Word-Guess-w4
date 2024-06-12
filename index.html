@@ -12,18 +12,26 @@
 <button class="start-button">Start!</button>
 </header>
 <main>
-  <section>
-    <div class="Question"></div>
-  </section>
-<!-- <div id="quiz"></div>  -->
-
-  <!-- <div id="results"></div> -->
+    <div class="quiz">
+    <div class="question">
+      <p id="question-text">Question 1: Who invented Javascript?</p>
+      <div class="answers">
+        <button class="answer"
+      onclick="checkAnswer(0)">Sean King</button>
+      <button class="answer"
+      onclick="checkAnswer(1)">Steven Green</button>
+      <button class="answer"
+      onclick="checkAnswer(2)">Brendan Eich</button>
+      <button class="answer"
+      onclick="checkAnswer(3)">Benjamin Franklin</button>
+    </div> 
+    <p id="feedback"></p>
   <div class= "card timer">
     <div class = "timer-text">
       <div class="large-font timer-count">30</div>
       <h3>seconds remaining</h3>
       </div>  
-    </main>
+      </main>
     <script src="assets/js/script.js"></script>    
-</body>
+  </body>
 </html>
