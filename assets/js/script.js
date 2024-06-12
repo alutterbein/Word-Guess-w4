@@ -1,11 +1,35 @@
 var timerElement = document.querySelector(".timer-count");
 var startButton = document.querySelector(".start-button");
-
+var quizContainer = document.getElementById('quiz')
+var resultsContainer = document.getElementById('results');
+var submitButton = document.getElementById('submit');
 
 var correctCounter = 0;
 var incorrectCounter = 0;
 var timer;
 var timerCount;
+
+// function buildQuiz(){
+//   var output = [];
+//   questions.forEach(
+//     (currentQuestion, questionNumber) => {
+//       const answers =[];
+//       for(letter in currentQuestion.answers){
+
+
+//         answers.push(
+//           `<label>
+//           <input `
+//         )
+//       }
+
+
+//     }
+//   )
+// }
+// function showResults(){}
+// buildQuiz();
+// submitButton.addEventListener('click', showResults);
 
 var questions = [
     {
@@ -37,25 +61,60 @@ var questions = [
       correctAnswer: "d"
     }
   ];
-
-
-for(var i=0; i <questions.length; i++){
-  var response = window.prompt(questions[i.prompt]);
-if(response== questions[i].answer){
-  correctCounter++;
+function startTimer(){
+  timer=setInterval(function() {
+    timerCount--;
+    timerElement.textContent = timerCount;
+    if (timerCount >= 0){
+      if(isWin &&timerCount > 0){
+      clearInterval(timer);
+      quizComplete();
+    };
+    }
+    if (timerCount === 0) {
+    clearInterval(timer);
+    timeOut();
+  }
+  
+}, 3000);
 }
-else {
-  incorrectCounter++;
-}
-}
-alert("You answered" + correctCounter + "/" + questions.length)
-
-function buildQuiz(){
-var output =[];
-myQuestions.forEach
 
 
+function startQuiz(){
+timerCount = 30;
+startButton.disabled = true;
+renderQuiz
+startTimer()
+
+};
+function quizComplete(){
+
+  wordBlank.textContent = "Quiz Complete";
+  startButton.disabled = false;
+  // likely where I'll need to add highscore prompt, and score
 }
+
+function timeOut() {
+  wordBlank.textContent = "Time's Up!";
+  startButton.disabled = false
+  // likely where I'll need to add highscore prompt, and score
+}
+
+
+
+// this could help basic function
+// for(var i=0; i <questions.length; i++){
+//   var response = window.prompt(questions[i.prompt]);
+// if(response== questions[i].answer){
+//   correctCounter++;
+// }
+// else {
+//   incorrectCounter++;
+// }
+// }
+// alert("You answered" + correctCounter + "/" + questions.length)
+
+
 
 // The setTimer function starts and stops the timer and triggers winGame() and loseGame()
 function startTimer() {
@@ -65,18 +124,19 @@ function startTimer() {
     timerElement.textContent = timerCount;
     if (timerCount >= 0) {
       // Tests if win condition is met
-      if (isWin && timerCount > 0) {
+      if (timerCount > 0) {
         // Clears interval and stops timer
         clearInterval(timer);
-        winGame();
+        quizComplete();
       }
     }
     // Tests if time has run out
     if (timerCount === 0) {
       // Clears interval
       clearInterval(timer);
-      loseGame();
+      timeOut();
     }
-  }, 1000);
+  }, 3000);
 }
 
+startButton.addEventListener("click", startQuiz);

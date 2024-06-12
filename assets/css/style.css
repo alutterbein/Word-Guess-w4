@@ -9,6 +9,18 @@ body {
   flex-direction: column;
   min-height: 100vh;
   justify-content: flex-start;
-  background: linear-gradient(0deg, rgba(19,41,61,1) 0%, rgba(237,245,249,1) 63%);
+  text-align: center
 }
 
+.timer {
+  height: 50px;
+  padding: 10px;
+  background: purple;
+  color: #fff;
+  text-align: center;
+}
+
+.timer-text {
+  padding: 15px;
+  color: black;
+}
